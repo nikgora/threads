@@ -59,7 +59,7 @@ void partialDotProduct(const std::vector<int>& v1, const std::vector<int>& v2) {
 
 int main()
 {
-    std::cout<<"capacity: "<<std::thread::hardware_concurrency<<"\n";
+    std::cout<<"hardware_concurrency: "<<std::thread::hardware_concurrency()<<"\n";
     std::cout<<"Main thread id: "<<std::this_thread::get_id()<<"\n";
     //TASK1
     std::thread thread111(run1,"first11");
