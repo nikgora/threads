@@ -1,0 +1,14 @@
+Main thread id: 1
+ID thread 2 RUN WORK 0
+ID thread 2 RUN WORK 1
+ID thread 2 RUN WORK 2
+ID thread 2 RUN WORK 3
+ID thread 2 RUN WORK 4
+ID thread 2 RUN WORK 5
+ID thread 2 RUN WORK 6
+ID thread 2 RUN WORK 7
+ID thread 2 RUN WORK 8
+ID thread 2 RUN WORK 9
+
+
+
