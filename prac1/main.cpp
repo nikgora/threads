@@ -47,10 +47,7 @@ void run22(std::string threadName) {
 
 void partialDotProduct(const std::vector<int>& v1, const std::vector<int>& v2) {
     int result = 0;
-    if (v1.size()!=v2.size()){
-        std::cout <<std::this_thread::get_id() <<" Vectors must be the same size!\n";
-        return;
-    }
+
     for (size_t i = 0; i < v1.size(); ++i) {
         result += v1[i] * v2[i];
     }
@@ -69,7 +66,6 @@ int main()
     std::thread thread113(run1,"first13");
     std::thread thread123(run1,"second13");
 
-    std::cout<<"\n\n\n";
     //TASK 2.1
     std::thread thread2111(run211,"first211", true);
     std::thread thread2121(run212,"second211", true);
@@ -82,18 +78,25 @@ int main()
     std::thread thread2115(run211,"first215", true);
     std::thread thread2125(run212,"second215", true);
 
-    std::cout<<"\n\n\n";
+
     //TASK 2.2
     std::thread thread221(run22,"first221");
     std::thread thread222(run22,"first222");
     std::thread thread223(run22,"first223");
 
 
-    std::cout<<"\n\n\n";
+
     //TASK 3
     std::vector<int> vector1 = {1, 2, 3, 4, 5};
     std::vector<int> vector2 = {6, 7, 8, 9, 4};
-    std::thread thread3 (partialDotProduct, std::ref(vector1), std::ref(vector2));
+    if (vector1.size()!=vector2.size()){
+        std::cout <<std::this_thread::get_id() <<" Vectors must be the same size!\n";
+    }
+    else {
+        std::cout<<"Task 3: ";
+        std::thread thread3(partialDotProduct, std::ref(vector1), std::ref(vector2));
+        thread3.join();
+    }
     thread111.join();
     thread121.join();
     thread112.join();
@@ -113,6 +116,5 @@ int main()
     thread221.join();
     thread222.join();
     thread223.join();
-    thread3.join();
     return 0;
 }
