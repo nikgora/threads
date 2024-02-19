@@ -10,11 +10,11 @@ std::mutex mtx;
 void run () {
     for (int i=0; i<10; i++)
     {
-        std::this_thread::sleep_for (std::chrono::milliseconds(2000)); //затримка на 2 секунди
+        std::this_thread::sleep_for (std::chrono::seconds(2)); //затримка на 2 секунди
         mtx.lock();
         std::cout << "ID thread " <<std::this_thread::get_id() << " RUN WORK " << i << "\n";
         mtx.unlock();
-        std::this_thread:: sleep_for (std::chrono::milliseconds(3000)); //затримка на 3 секунди
+        std::this_thread:: sleep_for (std::chrono::seconds(3)); //затримка на 3 секунди
         mtx.lock();
         std::cout << "\n";
         mtx.unlock();
@@ -67,7 +67,9 @@ int main()
     th21.join();
     th22.detach ();
     for (int i=0; i<10; i++) {
+        mtx.lock();
         std::cout << "ID thread " <<std::this_thread::get_id() << " WORK MAIN" << i << std::endl;
+        mtx.unlock();
         std::this_thread :: sleep_for (std::chrono::milliseconds(500));
     }
     th23.join();
