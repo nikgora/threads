@@ -91,9 +91,9 @@ int main()
 
     std::cout<<"\n\n\n";
     //TASK 2.2
-    std::thread thread221(run22,"first22");
-    std::thread thread222(run22,"first22");
-    std::thread thread223(run22,"first22");
+    std::thread thread221(run22,"first221");
+    std::thread thread222(run22,"first222");
+    std::thread thread223(run22,"first223");
 
     thread221.join();
     thread222.join();
