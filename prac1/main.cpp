@@ -34,8 +34,8 @@ void run212(std::string threadName, bool flag) {
 }
 
 void run22(std::string threadName) {
+    std::srand(std::time(nullptr));
     for (int i = 0; i < 10; i++) {
-        std::srand(std::time(nullptr));
         int rand = std::rand()%10;
         if (i - rand > 0) {
             std::cout << std::this_thread::get_id();
