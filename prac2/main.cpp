@@ -21,22 +21,22 @@ void run () {
     }
 
 }
-void computeX(std::string name,std::vector<double>& x) {
+void computeX(std::vector<double>& x, double& res) {
     double sum = 0;
     for (double xi : x) {
         sum += std::pow(xi * std::sin(xi * xi),-3);
     }
     mtx.lock();
-    std::cout << "Sum  "<<name<<": " << sum << std::endl;
+    res+=sum;
     mtx.unlock();
 }
-void computeY(std::string name,std::vector<double>& x) {
+void computeY(std::vector<double>& x, double& res) {
     double sum = 0;
     for (double xi : x) {
         sum += std::pow(xi * std::cos(xi * xi),-3);
     }
     mtx.lock();
-    std::cout << "Sum  "<<name<<": " << sum << std::endl;
+    res+=sum;
     mtx.unlock();
 }
 
@@ -73,29 +73,66 @@ int main()
         std::this_thread :: sleep_for (std::chrono::milliseconds(500));
     }
     th23.join();
+    std::cout<<"TASK 3\n";
     std::vector<double> x(10);
     std::vector<double> y(15);
     int dmax=25, dmin=0;
     std::srand(std::time(nullptr));
     for (int i =0 ;i< x.size();i++) {
-        int rand = std::rand()%(std::abs(dmax-dmin)+1);
-        x[i]=rand+dmin;
-//        std ::cout<<x[i]<<" ";
+        int rand = std::rand()%((std::abs(dmax-dmin))*100+1);
+        x[i]=(rand/100.0+dmin);
+//        std::cout<<x[i]<<" ";
     }
-    std::cout<<"\n";
+//    std::cout<<"\n";
     dmax=10;
     dmin=-10;
     for (int i =0 ;i< y.size();i++) {
-        int rand = std::rand()%(std::abs(dmax-dmin)+1);
-        y[i]=rand+dmin;
-//        std ::cout<<y[i]<<" ";
+        int rand = std::rand()%((std::abs(dmax-dmin))*100+1);
+        y[i]=(rand/100.0+dmin);
+//        std::cout<<y[i]<<" ";
     }
-    std::cout<<"\n";
-    std::thread t31(computeX,"X", std::ref(x));
-    std::thread t32(computeY, "Y", std::ref(y));
+//    std::cout<<"\n";
+    int size_of_chunk_x = 3;
+    int number_of_chunks_x = x.size()/size_of_chunk_x+bool(x.size()%size_of_chunk_x);
+    std::vector<std::vector<double>> vectors_x;
+    std::vector<std::vector<double>> vectors_y;
 
+    for (int i = 0; i< x.size(); i+=size_of_chunk_x){
+        std::vector<double>sub_vector;
+        int k = 0;
+        for (int j = i; j <x.size() && k<size_of_chunk_x; ++k,++j){
+            sub_vector.push_back(x[j]);
+        }
+        vectors_x.push_back(sub_vector);
+    }
+    int size_of_chunk_y = 3;
+    int number_of_chunks_y = y.size()/size_of_chunk_y+bool(y.size()%size_of_chunk_y);
 
-    t31.join();
-    t32.join();
+    for (int i = 0; i< y.size(); i+=size_of_chunk_y){
+        std::vector<double>sub_vector;
+        int k = 0;
+        for (int j = i; j <y.size() && k<size_of_chunk_y; ++k,++j){
+            sub_vector.push_back(y[j]);
+        }
+        vectors_y.push_back(sub_vector);
+    }
+    std::thread threads_x[number_of_chunks_x];
+    std::thread threads_y[number_of_chunks_y];
+    double res_y=0;
+    double res_x=0;
+    for(int i = 0; i< number_of_chunks_x; ++i){
+        threads_x[i] = std::thread  (computeX,std::ref(vectors_x[i]), std::ref(res_x));
+    }
+    for(int i = 0; i< number_of_chunks_y; ++i){
+        threads_y[i] = std::thread  (computeY,std::ref(vectors_y[i]), std::ref(res_y));
+    }
+    for(int i = 0; i< number_of_chunks_x; ++i){
+        threads_x[i].join();
+    }
+    for(int i = 0; i< number_of_chunks_y; ++i){
+        threads_y[i].join();
+    }
+    std::cout<<res_x<<"\n";
+    std::cout<<res_y<<"\n";
     return 0;
 }
