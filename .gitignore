@@ -1,4 +1,4 @@
-test/
+!**/test/
 !**/prac1/.idea/
 !**/prac1/cmake-build-debug/.cmake/
 !**/prac1/cmake-build-debug/Testing/
