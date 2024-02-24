@@ -1,0 +1,15 @@
+test/
+!**/prac1/.idea/
+!**/prac1/cmake-build-debug/.cmake/
+!**/prac1/cmake-build-debug/Testing/
+!**/prac1/cmake-build-debug/CmakeFiles/
+!**/prac1/cmake-build-debug/.ninja_deps
+!**/prac1/cmake-build-debug/.ninja_log
+!**/prac1/cmake-build-debug/build.ninja
+!**/prac2/.idea/
+!**/prac2/cmake-build-debug/.cmake/
+!**/prac2/cmake-build-debug/Testing/
+!**/prac2/cmake-build-debug/CmakeFiles/
+!**/prac2/cmake-build-debug/.ninja_deps
+!**/prac2/cmake-build-debug/.ninja_log
+!**/prac2/cmake-build-debug/build.ninja
