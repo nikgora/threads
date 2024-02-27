@@ -46,33 +46,33 @@ int main()
     std::cout<<"hardware_concurrency: "<<std::thread::hardware_concurrency()<<"\n";
     std::cout<<"Main thread id: "<<std::this_thread::get_id()<<"\n";
     std::cout<<"TASK 1: \n";
-//    //TASK1
-//    std::thread thread11(run);
-//    std::thread thread12(run);
-//    std::thread thread13(run);
-//    std::thread thread14(run);
-//    std::thread thread15(run);
-//    thread11.join();
-//    std::this_thread::sleep_for(std::chrono::milliseconds (150));
-//    thread12.join();
-//    std::this_thread::sleep_for(std::chrono::milliseconds (150));
-//    thread13.join();
-//    std::this_thread::sleep_for(std::chrono::milliseconds (150));
-//    thread14.join();
-//    thread15.join();
-//    std::this_thread::sleep_for(std::chrono::seconds(1));
-//    std::thread th21 (run);
-//    std::thread th22 (run);
-//    std::thread th23 (run);
-//    th21.join();
-//    th22.detach ();
-//    for (int i=0; i<10; i++) {
-//        mtx.lock();
-//        std::cout << "ID thread " <<std::this_thread::get_id() << " WORK MAIN" << i << std::endl;
-//        mtx.unlock();
-//        std::this_thread :: sleep_for (std::chrono::milliseconds(500));
-//    }
-//    th23.join();
+    //TASK1
+    std::thread thread11(run);
+    std::thread thread12(run);
+    std::thread thread13(run);
+    std::thread thread14(run);
+    std::thread thread15(run);
+    thread11.join();
+    std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    thread12.join();
+    std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    thread13.join();
+    std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    thread14.join();
+    thread15.join();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::thread th21 (run);
+    std::thread th22 (run);
+    std::thread th23 (run);
+    th21.join();
+    th22.detach ();
+    for (int i=0; i<10; i++) {
+        mtx.lock();
+        std::cout << "ID thread " <<std::this_thread::get_id() << " WORK MAIN" << i << std::endl;
+        mtx.unlock();
+        std::this_thread :: sleep_for (std::chrono::milliseconds(500));
+    }
+    th23.join();
     std::cout<<"TASK 3\n";
     std::vector<double> x(10);
     std::vector<double> y(15);
