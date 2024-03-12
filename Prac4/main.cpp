@@ -38,13 +38,6 @@ void maxMark(std::vector<Student> students, int &mark) {
                             })->score;
 }
 
-int vectorSum(std::vector<int> v) {
-    int s = 0;
-    for (int a: v) {
-        s += a;
-    }
-    return s;
-}
 
 int main() {
     // Створюємо масив студентів
