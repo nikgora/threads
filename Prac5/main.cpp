@@ -94,7 +94,7 @@ public:
     void printForward() const {
         std::this_thread::sleep_for(std::chrono::milliseconds(2500));
         std::atomic<Node*> current;
-        current.exchange(head);
+        current.store(head);
         mtx.lock();
         std::cout<<"Forward print: ";
         mtx.unlock();
@@ -102,7 +102,7 @@ public:
             mtx.lock();
             std::cout << current.load()->data << " ";
             mtx.unlock();
-            current.exchange(current.load()->next);
+            current.store(current.load()->next);
         }
         mtx.lock();
         std::cout << "\n";
@@ -112,7 +112,7 @@ public:
     void printBackward() const {
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         std::atomic<Node*> current;
-        current.exchange(tail);
+        current.store(tail);
         mtx.lock();
         std::cout<<"Backward print: ";
         mtx.unlock();
@@ -120,7 +120,7 @@ public:
             mtx.lock();
             std::cout << current.load()->data << " ";
             mtx.unlock();
-            current.exchange(current.load()->prev);
+            current.store(current.load()->prev);
         }
         mtx.lock();
         std::cout << "\n";
@@ -129,16 +129,16 @@ public:
 
     bool isSymmetric() const {
         std::atomic<Node*> forward;
-        forward.exchange(head);
+        forward.store(head);
         std::atomic<Node*> backward;
-        backward.exchange(tail);
+        backward.store(tail);
         std::this_thread::sleep_for(std::chrono::milliseconds(1500));
 
         while (forward && backward) {
             if (forward.load()->data != backward.load()->data)
                 return false;
-            forward.exchange(forward.load()->next);
-            backward.exchange(backward.load()->prev);
+            forward.store(forward.load()->next);
+            backward.store(backward.load()->prev);
         }
         return true;
     }
@@ -151,7 +151,7 @@ int main() {
     list.insertBefore(list.head, new Node(3));
     list.insertAfter(list.tail, new Node(1));
     list.insertBefore(list.head, new Node(4));
-    list.insertAfter(list.head.load()->next, new Node(5));
+    list.insertAfter(list.head.load()->next, new Node(5));//4 3 5 2 1
     std::thread t1([&]() {
         list.printForward();
     });
