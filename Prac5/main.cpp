@@ -92,38 +92,36 @@ public:
 
 
     void printForward() const {
+        std::string infoPrint;
         std::this_thread::sleep_for(std::chrono::milliseconds(2500));
         std::atomic<Node*> current;
         current.store(head);
-        mtx.lock();
-        std::cout<<"Forward print: ";
-        mtx.unlock();
+        infoPrint+="Forward print: ";
         while (current != nullptr) {
-            mtx.lock();
-            std::cout << current.load()->data << " ";
-            mtx.unlock();
+            infoPrint += std::to_string(current.load()->data);
+            infoPrint += " ";
             current.store(current.load()->next);
         }
+        infoPrint+="\n";
         mtx.lock();
-        std::cout << "\n";
+        std::cout << infoPrint;
         mtx.unlock();
     }
 
     void printBackward() const {
+        std::string infoPrint;
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         std::atomic<Node*> current;
         current.store(tail);
-        mtx.lock();
-        std::cout<<"Backward print: ";
-        mtx.unlock();
+        infoPrint+="Backward print: ";
         while (current != nullptr) {
-            mtx.lock();
-            std::cout << current.load()->data << " ";
-            mtx.unlock();
+            infoPrint += std::to_string(current.load()->data);
+            infoPrint += " ";
             current.store(current.load()->prev);
         }
+        infoPrint+="\n";
         mtx.lock();
-        std::cout << "\n";
+        std::cout << infoPrint;
         mtx.unlock();
     }
 
